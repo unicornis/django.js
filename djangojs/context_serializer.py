@@ -10,6 +10,8 @@ from django.utils import translation, six
 from djangojs.conf import settings
 from djangojs.utils import LazyJsonEncoder
 
+from .compat import middleware
+
 logger = logging.getLogger(__name__)
 
 
@@ -96,7 +98,7 @@ class ContextSerializer(object):
             'is_superuser': False,
             'permissions': tuple(),
         }
-        if 'django.contrib.sessions.middleware.SessionMiddleware' in settings.MIDDLEWARE_CLASSES:
+        if 'django.contrib.sessions.middleware.SessionMiddleware' in middleware:
             user = self.request.user
             data['user']['is_authenticated'] = user.is_authenticated()
             if hasattr(user, 'username'):

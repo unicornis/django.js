@@ -4,7 +4,12 @@ import sys
 from os.path import join, isdir
 
 from django.conf.urls import url
-from django.views.i18n import javascript_catalog as django_javascript_catalog
+try:
+    from django.views.i18n import javascript_catalog
+    jsc_view = javascript_catalog
+except ImportError:
+    from django.views.i18n import JavaScriptCatalog
+    jsc_view = JavaScriptCatalog.as_view()
 
 from djangojs.conf import settings
 from djangojs.views import UrlsJsonView, ContextJsonView, JsInitView
@@ -34,5 +39,5 @@ urlpatterns = [
     url(r'^init\.js$', JsInitView.as_view(), name='django_js_init'),
     url(r'^urls$', UrlsJsonView.as_view(), name='django_js_urls'),
     url(r'^context$', ContextJsonView.as_view(), name='django_js_context'),
-    url(r'^translation$', django_javascript_catalog, js_info_dict(), name='js_catalog'),
+    url(r'^translation$', jsc_view, js_info_dict(), name='js_catalog'),
 ]
