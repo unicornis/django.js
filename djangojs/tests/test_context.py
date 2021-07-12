@@ -14,7 +14,6 @@ from django.middleware.locale import LocaleMiddleware
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from django.utils import six
 from django.utils import translation
 from django.utils import unittest
 

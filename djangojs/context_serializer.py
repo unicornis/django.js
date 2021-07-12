@@ -5,7 +5,6 @@ import json
 import logging
 
 from django.template.context import RequestContext
-from django.utils import translation, six
 
 from djangojs.conf import settings
 from djangojs.utils import LazyJsonEncoder
@@ -19,7 +18,7 @@ __all__ = (
     'ContextSerializer',
 )
 
-SERIALIZABLE_TYPES = six.string_types + six.integer_types + (six.text_type, tuple, list, dict, bool, set)
+SERIALIZABLE_TYPES =  (str, int, tuple, list, dict, bool, set)
 
 
 class ContextSerializer(object):
@@ -43,7 +42,7 @@ class ContextSerializer(object):
         data = {}
         if settings.JS_CONTEXT_ENABLED:
             for context in RequestContext(self.request):
-                for key, value in six.iteritems(context):
+                for key, value in iter(context.items()):
                     if settings.JS_CONTEXT and key not in settings.JS_CONTEXT:
                         continue
                     if settings.JS_CONTEXT_EXCLUDE and key in settings.JS_CONTEXT_EXCLUDE:

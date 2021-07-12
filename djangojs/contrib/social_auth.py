@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from django.utils import six
 from djangojs.context_serializer import ContextSerializer
 
 
@@ -9,7 +7,7 @@ class SocialAuthContextMixin(object):
         """ Just force social_auth's LazyDict to be converted to a dict for the
             JSON serialization to work properly. """
 
-        data['social_auth'] = dict(six.iteritems(social_auth))
+        data['social_auth'] = iter(social_auth.items())
 
 
 class SocialAuthContextSerializer(SocialAuthContextMixin, ContextSerializer):
