@@ -3,12 +3,13 @@ import sys
 
 from os.path import join, isdir
 
-from django.conf.urls import url
 try:
     from django.views.i18n import javascript_catalog
+    from django.conf.urls import url
     jsc_view = javascript_catalog
 except ImportError:
     from django.views.i18n import JavaScriptCatalog
+    from django.urls import re_path as url
     jsc_view = JavaScriptCatalog.as_view()
 
 from djangojs.conf import settings
